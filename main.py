@@ -1,16 +1,16 @@
 import pygame
 from random import randint
 from copy import deepcopy
+from screeninfo import get_monitors
 
 
-width, height = 1920, 1080
 cell = 20
-w, h = width // cell, height // cell
+w, h = get_monitors()[0].width // cell, get_monitors()[0].height // cell
 FPS = 12
 
 pygame.init()
 pygame.display.set_caption("Game of Life")
-screen = pygame.display.set_mode((width, height))
+screen = pygame.display.set_mode((w * cell, h * cell))
 clock = pygame.time.Clock()
 
 next_field = [[0 for i in range(w)] for j in range(h)]
@@ -40,11 +40,8 @@ while True:
     screen.fill(pygame.Color('black'))
 
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and pygame.K_ESCAPE):
             exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                exit()
 
     for i in range(1, w - 1):
         for j in range(1, h - 1):
