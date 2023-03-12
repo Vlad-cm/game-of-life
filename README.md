@@ -16,6 +16,6 @@ You can create a screensaver from this game. For this you need:
         pip install auto-py-to-exe 
       ```
   2. Change file extension from .exe to .scr.
-  3. Move file to System32 folder.
+  3. Move file to C:\Windows\System32 folder.
 
 ![screenshot](/screenshots/screenshot_1.png?raw=true "Screenshot from the Game of Life")
