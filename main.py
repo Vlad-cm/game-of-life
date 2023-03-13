@@ -6,7 +6,9 @@ from screeninfo import get_monitors
 
 cell = 20
 w, h = get_monitors()[0].width // cell, get_monitors()[0].height // cell
-FPS = 12
+FPS = 6
+life = True
+
 
 pygame.init()
 pygame.display.set_caption("Game of Life")
@@ -40,14 +42,28 @@ while True:
     screen.fill(pygame.Color('black'))
 
     for event in pygame.event.get():
-        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and pygame.K_ESCAPE):
+        if (event.type == pygame.QUIT) or ((event.type == pygame.KEYDOWN) and (event.key == pygame.K_ESCAPE)):
             exit()
+        if (event.type == pygame.KEYDOWN) and (event.key == pygame.K_SPACE):
+            if life:
+                life = False
+            else:
+                life = True
+        if (event.type == pygame.MOUSEBUTTONDOWN) and pygame.mouse.get_pressed()[0]:
+            mouse_pos = pygame.mouse.get_pos()
+            current_field[mouse_pos[1] // cell][mouse_pos[0] // cell] = 1
+        elif (event.type == pygame.MOUSEBUTTONDOWN) and pygame.mouse.get_pressed()[2]:
+            mouse_pos = pygame.mouse.get_pos()
+            current_field[mouse_pos[1] // cell][mouse_pos[0] // cell] = 0
 
     for i in range(1, w - 1):
         for j in range(1, h - 1):
             if current_field[j][i]:
                 pygame.draw.rect(screen, pygame.Color('white'), (i * cell + 2, j * cell + 2, cell - 2, cell - 2))
-            next_field[j][i] = check_cell(current_field, i, j)
+            if life:
+                next_field[j][i] = check_cell(current_field, i, j)
+            else:
+                next_field[j][i] = current_field[j][i]
 
     current_field = deepcopy(next_field)
 
