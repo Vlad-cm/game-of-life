@@ -45,15 +45,11 @@ while True:
         if (event.type == pygame.QUIT) or ((event.type == pygame.KEYDOWN) and (event.key == pygame.K_ESCAPE)):
             exit()
         if (event.type == pygame.KEYDOWN) and (event.key == pygame.K_SPACE):
-            if life:
-                life = False
-            else:
-                life = True
-        if (event.type == pygame.MOUSEBUTTONDOWN) and pygame.mouse.get_pressed()[0]:
-            mouse_pos = pygame.mouse.get_pos()
+            life = not life
+        mouse_pos = pygame.mouse.get_pos()
+        if (event.type == pygame.MOUSEBUTTONDOWN) and pygame.mouse.get_pressed()[0]:            
             current_field[mouse_pos[1] // cell][mouse_pos[0] // cell] = 1
         elif (event.type == pygame.MOUSEBUTTONDOWN) and pygame.mouse.get_pressed()[2]:
-            mouse_pos = pygame.mouse.get_pos()
             current_field[mouse_pos[1] // cell][mouse_pos[0] // cell] = 0
 
     for i in range(1, w - 1):
